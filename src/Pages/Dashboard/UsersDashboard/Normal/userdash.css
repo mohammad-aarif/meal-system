@@ -1,0 +1,46 @@
+.width-60{
+    width: 60%;
+}
+.calc-container{
+    background: #000;
+    height: 8rem;
+    padding-top: 15px;
+    width: 12rem;
+    border-radius: 10px;
+    position: relative;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    text-align: left;
+}
+.calc-container p{
+    font-size: 0.9rem;
+    margin:-10px 0px -10px 0px;
+}
+.total-meal{
+    background: rgb(255,151,0);
+    background: linear-gradient(45deg, rgba(255,151,0,1) 0%, rgba(255,206,0,1) 100%);
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(255,151,0, 0.2); 
+    box-shadow: 0px 0px 10px 5px rgba(255,151,0, 0.2);
+}
+.total-deposit{
+    background: rgb(202,253,71);
+    background: linear-gradient(228deg, rgba(202,253,71,1) 0%, rgba(2,193,28,1) 100%);
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(116, 250, 7, 0.2); 
+    box-shadow: 0px 0px 10px 5px rgba(104, 253, 5, 0.3);
+}
+.total-cost{
+    background: rgb(101,4,168);
+background: linear-gradient(43deg, rgba(101,4,168,1) 0%, rgba(157,10,246,1) 100%);
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(111, 0, 255, 0.2); 
+    box-shadow: 0px 0px 10px 5px rgba(226, 3, 255, 0.2);
+}
+.current-mealrate{
+    background: rgb(0,198,255);
+    background: linear-gradient(228deg, rgba(0,198,255,1) 0%, rgba(0,114,255,1) 100%);
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(0, 174, 255, 0.2); 
+    box-shadow: 0px 0px 10px 5px rgba(0, 162, 255, 0.3);
+}
