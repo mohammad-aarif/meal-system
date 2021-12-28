@@ -2,25 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { HiMenuAlt2 } from "react-icons/hi";
 import useAuth from '../../../../Hooks/useAuth';
-import useUser from '../../../../Hooks/useUser';
+import { CircularProgress } from '@mui/material';
 const NavUser = () => {
-    const {user, logOut} = useAuth();
-    const [profile, setProfile] = useState('')
+    const {user, isLoading, logOut} = useAuth();
+    const [profile, setProfile] = useState({})
     const [dropdown, setDropdown] = useState(true)
     const [mobileMenu, setMobileMenu] = useState(true)
     useEffect(() => {
         fetch(`https://intense-inlet-54612.herokuapp.com/userdata/${user.email}`)
         .then(res => res.json())
-        .then(data => setProfile(data.networkInfo.network))
+        .then(data => setProfile(data.networkInfo))
     }, [user.email])
-    console.log(profile);
         return (
         <div className='navbar-dash'>
             <nav className='nav-content d-flex mx-auto w-75 justify-content-between align-items-center'>
                 <div className="logo"><h2>MealSystem</h2></div>
-                <div className="menu">
+                {isLoading? <CircularProgress />:<div className="menu">
                     {profile ? <ul>
-                        <li><NavLink to='home'>Dasboard</NavLink></li>
+                        {profile.role === 'manager'? <li><NavLink to='/manager'>Manager </NavLink></li>:<li><NavLink to='home'>Dasboard</NavLink></li>}
                         <li><NavLink to='goods'>Goods</NavLink></li>
                         <li><NavLink to='network'>Network</NavLink></li>
                         <li onClick={() => setDropdown(!dropdown)}><img className='nav-img ps-2' src={user.photoURL} alt="" />
@@ -28,9 +27,15 @@ const NavUser = () => {
                                 <li><button className='btn' onClick={logOut}>Logout</button></li>
                             </ul>
                         </li>
-                    </ul>: <ul><li><NavLink to='create'>Create Net</NavLink></li></ul>
+                    </ul>: <ul><li><NavLink to='create'>Create Net</NavLink></li>
+                    <li onClick={() => setDropdown(!dropdown)}><img className='nav-img ps-2' src={user.photoURL} alt="" />
+                            <ul className="dropdown-nav px-3 py-2" style={dropdown?{display: 'none'} : {display: 'block'}}>
+                                <li><button className='btn' onClick={logOut}>Logout</button></li>
+                            </ul>
+                        </li>
+                    </ul>
                     }
-                </div>
+                </div>}
                 <div className="menu-icon px-3" onClick={() => setMobileMenu(!mobileMenu)} ><HiMenuAlt2 size={'2.2em'}/></div>
             </nav>
                 <div className="mobile" style={mobileMenu ?{display: 'none'} : {display: 'flex'}} >

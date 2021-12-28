@@ -5,7 +5,7 @@ import './home.css'
 
 const Home = () => {
     return (
-        <div>
+        <div className='root-background'>
             <Navbar />
             <Header />
         </div>

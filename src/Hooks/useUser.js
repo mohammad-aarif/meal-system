@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
+import useAuth from "./useAuth"
 
 const useUser = (email) => {
     const [profile, setProfile] = useState({})
-    const [loadingProfile, setLoadingProfile] = useState(true)
+    const {setIsLoading} = useAuth()
     useEffect(() => {
+        setIsLoading(true)
         fetch(`https://intense-inlet-54612.herokuapp.com/userdata/${email}`)
         .then(res => res.json())
         .then(data => setProfile(data))
-        .finally(() => setLoadingProfile(false))
-    }, [])
+        .finally(() => setIsLoading(false))
+    }, [email, setIsLoading])
 
-    return {profile, loadingProfile}
+    return {profile}
 }
 export default useUser

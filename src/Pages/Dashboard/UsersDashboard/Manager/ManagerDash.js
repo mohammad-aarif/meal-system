@@ -1,31 +1,38 @@
-import { getRoles } from '@testing-library/react';
 import React, { useEffect, useState } from 'react';
-import {Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import {Route, Routes,  useNavigate } from 'react-router-dom';
 import useAuth from '../../../../Hooks/useAuth';
-import AddMeal from './AddMeal';
-import BuyGoods from './BuyGoods';
-import DepositMoney from './DepositMoney';
+import Loading from '../../../Shared/Loading/Loading';
+import Deposit from './Deposit/Deposit';
+import Manager from './Manager';
 import NavbarDash from './NavbarDash';
 import TotalInsight from './TotalInsight';
-
+import MealDash from './AddMeal/MealDash'
+import GoodsDash from './Goods/GoodsDash';
 const ManagerDash =  () => {
-    const {user, isLoading} = useAuth();
+    const {user, isLoading, setIsLoading} = useAuth();
     const [role, setRole] = useState('loading')
     const history = useNavigate()
-    // console.log(url);
     const url =  `https://intense-inlet-54612.herokuapp.com/users/role/${user.email}`
     useEffect(() => {
+        setIsLoading(true)
         fetch(url)
         .then(res => res.json())
         .then(data => {
             setRole(data.role)
         })
-    }, [])
-                if(role !== 'manager'){
-                console.log(role);
-                const uri = '/userdashboard';
-                // history(uri)
-            }       
+        .finally(() => setIsLoading(false))
+    }, [url])
+
+    useEffect(() => {
+        if(role !== 'manager'){
+        const uri = '/userdashboard';
+        // history(uri)
+        }
+        if(isLoading){
+            return <Loading />
+        }
+    }, [role, isLoading, history])
+      
     return (
         <div className='manager-container'>
             <div className="overlay">
@@ -33,9 +40,10 @@ const ManagerDash =  () => {
             <Routes>
                 <Route path='/' element={<TotalInsight />} />
                 <Route path='/manager' element={<TotalInsight />} />
-                <Route path='/addmeal' element={<AddMeal />} />
-                <Route path='/deposit' element={<DepositMoney />} />
-                <Route path='/addgoods' element={<BuyGoods />} />
+                <Route path='/addmember' element={<Manager />} />
+                <Route path='/addmeal' element={<MealDash />} />
+                <Route path='/deposit' element={<Deposit />} />
+                <Route path='/addgoods' element={<GoodsDash />} />
             </Routes>
             </div>
         </div>

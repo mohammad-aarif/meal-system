@@ -1,12 +1,13 @@
 import { TextField } from '@mui/material';
-import React from 'react';
+import userEvent from '@testing-library/user-event';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { FcGoogle } from "react-icons/fc"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../../Hooks/useAuth';
 import './login.css'
 const Login = () => {
-    const {googleSignIn, role, logOut, user, signInEmail} = useAuth();
+    const {googleSignIn, user, signInEmail} = useAuth();
     const [loginData, setLoginData] = useState({})
     const takeLoginData = e => {
         const key = e.target.name;
@@ -19,6 +20,12 @@ const Login = () => {
         signInEmail(loginData.email, loginData.password)
         e.preventDefault()
     }
+    const redirect = useNavigate()
+    useEffect(() => {
+        if(user.email){
+            redirect('/userdashboard')
+        }
+    }, [user.email, redirect])
     return (
         <div className="login-root">
             <h3 className="text-center pt-4">Login</h3>

@@ -13,10 +13,11 @@ const NavbarDash = () => {
                 <div className="menu">
                     <ul>
                         <li><NavLink to='manager'>Dashboard</NavLink></li>
-                        <li><NavLink to='addmeal'>Add Meal</NavLink></li>
+                        <li><NavLink to='addmember'>Member</NavLink></li>
+                        <li><NavLink to='addmeal'>Meal</NavLink></li>
                         <li><NavLink to='deposit'>Deposit</NavLink></li>
                         <li><NavLink to='addgoods'>Goods</NavLink></li>
-                        {user.email && <li onClick={() => setDropdown(!dropdown)}><img className='nav-img ps-2' src={user.photoURL} alt="" />
+                        {user.email && <li onClick={() => setDropdown(!dropdown)}><img className='nav-img ps-2' src={user.photoURL || 'none'} alt="" />
                             <ul className="dropdown-nav px-3 py-2" style={dropdown?{display: 'none'} : {display: 'block'}}>
                                 <li><button className='btn' onClick={logOut}>Logout</button></li>
                             </ul>

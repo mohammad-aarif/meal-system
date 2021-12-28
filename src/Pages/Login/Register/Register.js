@@ -1,12 +1,12 @@
 import { TextField } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useFirebase from '../../../Hooks/useFirebase';
 import { FcGoogle } from "react-icons/fc"
 
 const Register = () => {
-    const {signUpEmail, googleSignIn} = useFirebase();
+    const {signUpEmail, user, googleSignIn} = useFirebase();
     const [registerValue, setRegisterValue] = useState({})
     const registerValueTake = (e) => {
         const newValue = {...registerValue};
@@ -19,6 +19,12 @@ const Register = () => {
         signUpEmail(registerValue.email, registerValue.password, registerValue.name)
         e.preventDefault()
     }
+    const redirect = useNavigate()
+    useEffect(() => {
+        if(user.email){
+            redirect('/userdashboard')
+        }
+    }, [user.email, redirect])
     return (
         <div className="login-root">
             <div className='login-container mx-auto py-5'>
@@ -51,7 +57,7 @@ const Register = () => {
                             color="warning"
                             variant="standard"
                             />
-                <p>Already Have an Account? <Link to="/login">Log in</Link></p>
+                            <p>Already Have an Account? <Link to="/login">Log in</Link></p>
                             <input type="submit" className='general-btn w-100 my-3' value="Register" />
                 </form>
                 <button className='btn w-100' onClick={googleSignIn}><FcGoogle/> Sign-in With Google</button>

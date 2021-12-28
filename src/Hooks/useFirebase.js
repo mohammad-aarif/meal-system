@@ -7,7 +7,6 @@ const useFirebase = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState('')
     const [user, setUser] = useState({})
-    const [role, setRole] = useState('')
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
 
@@ -106,7 +105,6 @@ const useFirebase = () => {
         error,
         setIsLoading,
         isLoading,
-        role,
         signInEmail,
         signUpEmail,
         logOut,

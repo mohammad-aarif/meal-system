@@ -1,7 +1,9 @@
+import { TextField } from '@mui/material';
 import React, { useState } from 'react';
 import useAuth from '../../../../Hooks/useAuth';
+import Loading from '../../../Shared/Loading/Loading';
 const Manager = () => {
-    const {user} = useAuth();
+    const {user, isLoading} = useAuth();
     const memberTemplate = {name: "", email: ""}
     const [newMember, setNewMember] = useState([memberTemplate])
     const addField = () => {
@@ -36,25 +38,47 @@ const Manager = () => {
                 },
                 body: JSON.stringify(data)
             })
+            .then(res => res.json())
+            .then(data => console.log(data))
         })
         e.preventDefault()
     }
+    if(isLoading){
+        return <Loading />
+    }
     return (
-        <div>
+        <div className='width-35 mx-auto py-5'>
                 <form onSubmit={handleAddMember}>
                     {
                         newMember.map((e, index) => (
                             <div key={index}>
-                            <input name="name" required type="text" value={e.name} onChange={e => memberForm(e, index)} placeholder='name'/>
-                            <input name="email" required type="email" value={e.email} onChange={e => memberForm(e, index)} placeholder="email"/> 
-                            <button onClick={addField}>Add</button>
+                            {/* <input name="name" required type="text" value={e.name} onChange={e => memberForm(e, index)} placeholder='name'/> */}
+                            <TextField 
+                            className="mb-2"
+                            label="Name"
+                            onChange={e => memberForm(e, index)}
+                            name='name'
+                            color="warning"
+                            variant="standard"
+                            />
+                            <TextField 
+                            className="mb-2 ms-3"
+                            label="Email"
+                            onChange={e => memberForm(e, index)}
+                            name='email'
+                            type='email'
+                            color="warning"
+                            value={e.email}
+                            variant="standard"
+                            />
+                            {/* <input name="email" required type="email" value={e.email} onChange={e => memberForm(e, index)} placeholder="email"/>  */}
                             {newMember.length > 1 && 
-                            <button onClick={() => removeField(index)}>Remove</button>
+                            <button className='btn-skull remove-btn ms-3 m-2' onClick={() => removeField(index)}>Remove</button>
                             }
                             </div>
                         ))
                     }
-                        <button type="submit">Submit</button>
+                        <button type="submit" className='general-btn mt-3'>Submit</button> <button className='btn-skull ms-2 mt-3 total-deposit' onClick={addField}>Add</button>
                     </form>
 
         </div>

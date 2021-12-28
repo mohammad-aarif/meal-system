@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import useAuth from '../../../../Hooks/useAuth';
+import Loading from '../../../Shared/Loading/Loading';
 import AllCalc from './AllCalc';
 import CreateNet from './CreateNet';
 import MarketList from './MarketList';
@@ -7,6 +9,13 @@ import NavUser from './NavUser';
 import Network from './Network';
 
 const UserDash = () => {
+    const{isLoading} = useAuth()
+    console.log(isLoading)
+    // useEffect(() => {
+        // if(isLoading){
+        //     return <Loading />
+        // }
+    // }, [isLoading])
     return (
         <div className='manager-container'>
             <div className="overlay">
