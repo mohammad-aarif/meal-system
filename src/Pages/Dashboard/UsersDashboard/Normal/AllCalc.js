@@ -17,13 +17,10 @@ const AllCalc = () => {
         fetch(`https://intense-inlet-54612.herokuapp.com/userdata/${user.email}`)
         .then(res => res.json())
         .then(data => setProfile(data))
-    }, [user.email])
-    console.log(profile?.networkInfo?.network);
-    
+    }, [user.email])    
     const {totalCostCount} = useTotalCost(profile?.networkInfo?.network)
     const {mealCountAdmin} = useTotalmealAdmin(profile?.networkInfo?.network)
-    const depositCount = useTotalmealAdmin(user.email)
-    console.log(depositCount);
+    // const depositCount = useTotalmealAdmin(user.email)
     const mealrate = totalCostCount / mealCountAdmin;
 
     if(isLoading){

@@ -1,5 +1,7 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { profileAction } from "../app/Reducers/profileSlice";
 import firebaseAppInitialize from "../Pages/Login/Firebase/firebase.init";
 
 firebaseAppInitialize()
@@ -67,7 +69,7 @@ const useFirebase = () => {
         return () => unsubscribe;
     },[auth])
 
-    // Log Out 
+    // Log Out
     const logOut = () => {
         setIsLoading(true)
         signOut(auth).then(() => {

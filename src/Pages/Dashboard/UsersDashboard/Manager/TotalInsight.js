@@ -18,7 +18,6 @@ const TotalInsight = () => {
         .finally(() => setIsLoading(false))
     }, [user.email, setIsLoading])
     const mealrate = totalCostCount / mealCountAdmin;
-    console.log(totalDepositCount)
     if(isLoading){
         return <Loading/>
     }

@@ -67,7 +67,7 @@ const Deposit = () => {
                 confirmButtonText: 'Yes, delete it!'
               }).then((result) =>{
                       if(result.isConfirmed){
-                        const url = `http://localhost:3002/deposit/${id}`
+                        const url = `https://intense-inlet-54612.herokuapp.com/deposits/${id}`
                       fetch(url, {
                         method:'DElETE'
                       })

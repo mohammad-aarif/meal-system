@@ -1,8 +1,10 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import { SnackbarProvider, useSnackbar } from 'notistack';
+import { useSelector } from 'react-redux';
 
 function MyApp() {
+  const name = useSelector(state => state.profile.name)
   const { enqueueSnackbar } = useSnackbar();
 
   const handleClick = () => {
@@ -17,6 +19,7 @@ function MyApp() {
   return (
     <React.Fragment>
       <Button onClick={handleClick}>Show snackbar</Button>
+      <h1>{name}</h1>
       <Button onClick={handleClickVariant('success')}>Show success snackbar</Button>
     </React.Fragment>
   );

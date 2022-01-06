@@ -8,30 +8,15 @@ import NavbarDash from './NavbarDash';
 import TotalInsight from './TotalInsight';
 import MealDash from './AddMeal/MealDash'
 import GoodsDash from './Goods/GoodsDash';
+import { useSelector } from 'react-redux';
 const ManagerDash =  () => {
     const {user, isLoading, setIsLoading} = useAuth();
-    const [role, setRole] = useState('loading')
+    const role = useSelector(state => state.profile.profileData.networkInfo.role)
     const history = useNavigate()
-    const url =  `https://intense-inlet-54612.herokuapp.com/users/role/${user.email}`
-    useEffect(() => {
-        setIsLoading(true)
-        fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            setRole(data.role)
-        })
-        .finally(() => setIsLoading(false))
-    }, [url])
-
-    useEffect(() => {
-        if(role !== 'manager'){
-        const uri = '/userdashboard';
-        // history(uri)
-        }
-        if(isLoading){
-            return <Loading />
-        }
-    }, [role, isLoading, history])
+    if (role !== 'manager'){
+        history('/userdasboard')
+    }
+    console.log(role);
       
     return (
         <div className='manager-container'>

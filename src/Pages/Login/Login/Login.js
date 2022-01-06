@@ -1,14 +1,21 @@
 import { TextField } from '@mui/material';
-import userEvent from '@testing-library/user-event';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { FcGoogle } from "react-icons/fc"
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { profileAction } from '../../../app/Reducers/profileSlice';
 import useAuth from '../../../Hooks/useAuth';
+import useUser from '../../../Hooks/useUser'
 import './login.css'
 const Login = () => {
     const {googleSignIn, user, signInEmail} = useAuth();
     const [loginData, setLoginData] = useState({})
+    const [profile, setProfile] = useState({})
+    const {setIsLoading} = useAuth()
+    const role = useSelector(state => state?.profile?.profileData?.networkInfo?.role)
+    const dispatch = useDispatch()
     const takeLoginData = e => {
         const key = e.target.name;
         const value = e.target.value;
@@ -20,12 +27,24 @@ const Login = () => {
         signInEmail(loginData.email, loginData.password)
         e.preventDefault()
     }
+    // const {profile} = useUser(user.email)
+    dispatch(profileAction(profile))
     const redirect = useNavigate()
     useEffect(() => {
-        if(user.email){
-            redirect('/userdashboard')
-        }
-    }, [user.email, redirect])
+        setIsLoading(true)
+        fetch(`https://intense-inlet-54612.herokuapp.com/userdata/${user.email}`)
+        .then(res => res.json())
+        .then(data => {
+            setProfile(data)
+            if(role === 'manager'){
+                // redirect('/manager')
+            }
+            else{
+                redirect ('/userdashboard')
+            }
+        })
+        .finally(() => setIsLoading(false))
+    }, [user.email, role, redirect, setIsLoading])
     return (
         <div className="login-root">
             <h3 className="text-center pt-4">Login</h3>

@@ -17,7 +17,7 @@ const NavbarDash = () => {
                         <li><NavLink to='addmeal'>Meal</NavLink></li>
                         <li><NavLink to='deposit'>Deposit</NavLink></li>
                         <li><NavLink to='addgoods'>Goods</NavLink></li>
-                        {user.email && <li onClick={() => setDropdown(!dropdown)}><img className='nav-img ps-2' src={user.photoURL || 'none'} alt="" />
+                        {user.email && <li onClick={() => setDropdown(!dropdown)}><img className='nav-img ps-2' src={user.photoURL || 'https://i.postimg.cc/cCX322mC/images.png'} alt="" />
                             <ul className="dropdown-nav px-3 py-2" style={dropdown?{display: 'none'} : {display: 'block'}}>
                                 <li><button className='btn' onClick={logOut}>Logout</button></li>
                             </ul>

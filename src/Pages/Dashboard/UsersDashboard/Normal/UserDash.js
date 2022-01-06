@@ -1,21 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import { profileAction } from '../../../../app/Reducers/profileSlice';
 import useAuth from '../../../../Hooks/useAuth';
-import Loading from '../../../Shared/Loading/Loading';
+import useUser from '../../../../Hooks/useUser';
 import AllCalc from './AllCalc';
 import CreateNet from './CreateNet';
 import MarketList from './MarketList';
 import NavUser from './NavUser';
 import Network from './Network';
-
 const UserDash = () => {
-    const{isLoading} = useAuth()
-    console.log(isLoading)
-    // useEffect(() => {
-        // if(isLoading){
-        //     return <Loading />
-        // }
-    // }, [isLoading])
+    const {user} = useAuth();
+    const dispatch = useDispatch()
+    const {profile} = useUser(user.email)
+    dispatch(profileAction(profile))
+
     return (
         <div className='manager-container'>
             <div className="overlay">
